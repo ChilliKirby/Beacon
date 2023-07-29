@@ -6,7 +6,7 @@ import { Marker } from 'react-native-maps';
 import { useState } from 'react';
 import { PROVIDER_GOOGLE } from 'react-native-maps';
 
-
+//jj
 export default function App() {
 
  
