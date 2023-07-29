@@ -21,10 +21,21 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.chillikirby.Beacon",
+      "config": {
+        "googleMaps": {
+          "apiKey": "process.env.REACT_APP_ACCESS_KEY"
+        }
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dc9e8abc-801c-4cb4-82a0-099c036f8001"
+      }
     }
   }
 }
