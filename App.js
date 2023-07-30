@@ -45,7 +45,7 @@ export default function App() {
   }, []);
 
   let text = "waiting...";
-  
+  //
   if(errorMsg){
     text = errorMsg;
   } else if(location){
