@@ -45,17 +45,12 @@ export default function App() {
   }, []);
 
   let text = "waiting...";
-  ////
+  
   if(errorMsg){
     text = errorMsg;
   } else if(location){
     text = JSON.stringify(location);
-    //const jsonObj = JSON.parse
-    // setLocation(prevLoc => ({
-    //   ...prevLoc,
-    //   latitude: location.latitude,
-    //   longitude: location.longitude,
-    // }))
+    
   }
 
   return (
