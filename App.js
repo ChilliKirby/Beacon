@@ -8,10 +8,8 @@ import { PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 import React from 'react';
 
-//jj
+
 export default function App() {
-
-
 
   const [region, setRegion] = useState({
     latitude: 37.78825,
