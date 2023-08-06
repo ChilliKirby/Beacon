@@ -7,6 +7,7 @@ import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
 import { register } from ""
+import userRoutes from ""
 
 
 /* CONFIGURATIONS */
@@ -22,6 +23,7 @@ app.use(cors());
 /* ROUTES */
 app.post("/auth/register", register);
 app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
 
 /* MONGOOSE SETUP */
 
