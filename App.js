@@ -7,6 +7,10 @@ import { useState, useEffect } from 'react';
 import { PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 import React from 'react';
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
+import { themeSettings } from "./theme.js";
 
 
 export default function App() {
@@ -52,18 +56,36 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>{text}</Text>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        initialRegion={region}
-        style={styles.mapContainer}
-        region={region}
-      // onRegionChange={setRegion}
-      >
-        <Marker coordinate={region} />
-      </MapView>
-    </View>
+    // <View style={styles.container}>
+    //   <Text>{text}</Text>
+    //   <MapView
+    //     provider={PROVIDER_GOOGLE}
+    //     initialRegion={region}
+    //     style={styles.mapContainer}
+    //     region={region}
+    //   // onRegionChange={setRegion}
+    //   >
+    //     <Marker coordinate={region} />
+    //   </MapView>
+    // </View>
+    <div className='app'>
+      <BrowserRouter>
+        <ThemeProvider >
+          <CssBaseline />
+          <Routes>
+            <Route path="/" element={ <LoginPage />} />
+            <Route
+              path="/home"
+              element={isAuth ? <HomePage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/profile/:userId"
+              element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+            />
+          </Routes>
+        </ThemeProvider>
+      </BrowserRouter>
+    </div>
   );
 }
 
