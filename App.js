@@ -17,6 +17,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginPage from "./scenes/loginPage/LoginPage.jsx";
 import HomePage from "./scenes/homePage/HomePage.jsx";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts } from 'expo-font'
 
 
 export default function App() {
@@ -60,7 +61,10 @@ export default function App() {
   //   text = JSON.stringify(location);
     
   // }
-
+  const [fontsLoaded] = useFonts({
+      'questrial': require('./assets/fonts/questrial/Questrial-Regular.ttf'),
+  });
+  
   const mode = "dark";
   const isAuth = Boolean(true);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
