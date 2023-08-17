@@ -30,7 +30,13 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     color: '#fff',
     alignSelf: 'center',
-    fontFamily: 'questrial',
+    fontFamily: 'Questrial',
+  },
+  textFormError: {
+    fontSize: 20,
+    color: "#f00",
+    fontFamily: 'Questrial',
+    marginHorizontal:12,
   },
   /* TEXT FIELDS */
   textInputField: {

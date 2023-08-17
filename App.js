@@ -61,10 +61,13 @@ export default function App() {
   //   text = JSON.stringify(location);
     
   // }
+
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //Look into doing a splash screen to wait for font to load
   const [fontsLoaded] = useFonts({
-      'questrial': require('./assets/fonts/questrial/Questrial-Regular.ttf'),
+      'Questrial': require('./assets/fonts/questrial/Questrial-Regular.ttf'),
   });
-  
+
   const mode = "dark";
   const isAuth = Boolean(true);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
