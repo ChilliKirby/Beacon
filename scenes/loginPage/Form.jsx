@@ -10,7 +10,6 @@ import { styles } from "../../Styles.js";
 //     OutlinedTextField, } from "react-native-material-textfield";
 
 
-
 const registrationSchema = yup.object().shape({
     userName: yup.string().required("*User name is required*"),
     email: yup.string().email("invalid email").required("*A valid email is required*"),
@@ -35,8 +34,10 @@ const handleFormSubmit = () => {
 
 };
 
-const Form = () => {
-   
+const Form = ({ navigation }) => {
+
+    const [isLogin, setIsLogin] = useState(true);
+
     return (
         <SafeAreaView>
             <ScrollView>
@@ -47,18 +48,21 @@ const Form = () => {
                     initialValues={initialValuesRegister}
                 >
                     {props => (
+
+
                         <View style={styles.textInputContainer}>
 
-                            <Text style={styles.textHeadCentered}> Sign up </Text>
+                            <Text style={styles.textHeadCentered}> {isLogin ? "Log in" : "Sign up"} </Text>
 
-                            <TextInput placeholderTextColor="#999"
-                                style={styles.textInputField}
-                                placeholder="user name"
-                                onChangeText={text => props.setFieldValue("userName", text)}
-                                onBlur={() => props.setFieldTouched("userName")}
-                                error={props.touched.userName ? props.errors.userName : null}
-                            />
-                            {props.touched.userName &&
+                            {!isLogin && (
+                                <TextInput placeholderTextColor="#999"
+                                    style={styles.textInputField}
+                                    placeholder="user name"
+                                    onChangeText={text => props.setFieldValue("userName", text)}
+                                    onBlur={() => props.setFieldTouched("userName")}
+                                    error={props.touched.userName ? props.errors.userName : null}
+                                />)}
+                            {props.touched.userName && !isLogin &&
                                 <Text style={styles.textFormError}>{props.errors.userName} </Text>
                             }
 
@@ -87,23 +91,50 @@ const Form = () => {
                             {props.touched.password &&
                                 <Text style={styles.textFormError}>{props.errors.password}</Text>
                             }
-                            
-                            <TextInput
-                                placeholderTextColor="#999"
-                                style={styles.textInputField}
-                                placeholder="confirm password"
-                                onChangeText={text => props.setFieldValue("confirmPassword", text)}
-                                onBlur={() => props.setFieldTouched("confirmPassword")}
-                                error={props.touched.confirmPassword ? props.errors.confirmPassword : null}
-                                secureTextEntry={true}
-                            />
-                            {props.touched.confirmPassword &&
+
+                            {!isLogin && (
+                                <TextInput
+                                    placeholderTextColor="#999"
+                                    style={styles.textInputField}
+                                    placeholder="confirm password"
+                                    onChangeText={text => props.setFieldValue("confirmPassword", text)}
+                                    onBlur={() => props.setFieldTouched("confirmPassword")}
+                                    error={props.touched.confirmPassword ? props.errors.confirmPassword : null}
+                                    secureTextEntry={true}
+                                />
+                            )}
+
+                            {props.touched.confirmPassword && !isLogin &&
                                 <Text style={styles.textFormError}>{props.errors.confirmPassword}</Text>
                             }
 
-                            <Button onPress={props.handleSubmit} title="Sign Up" />
+                            {isLogin && (
+                                <Button onPress={props.handleSubmit} title="Log in" />
+                            )}
 
-                            <Text style={{ fontSize: 20 }}>{JSON.stringify(props, null, 2)}</Text>
+                            {!isLogin && (
+                                <Button onPress={props.handleSubmit} title="Sign Up" />
+                            )}
+
+
+                            <Text
+                                style={styles.textInfo}
+                                onPress={() => {
+                                    setIsLogin(!isLogin);
+                                    props.resetForm();
+                                }}
+                            >{isLogin ? (
+                                "Don't have an account? Create one here!"
+                            ) : (
+                                "Already have an account? Sign in here!"
+                            )}
+                            </Text>
+
+
+                            <Text
+                                style={{ fontSize: 20 }}
+                            >
+                                {JSON.stringify(props, null, 2)}</Text>
                         </View>
                     )}
                 </Formik>

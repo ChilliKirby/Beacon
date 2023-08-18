@@ -38,6 +38,13 @@ export const styles = StyleSheet.create({
     fontFamily: 'Questrial',
     marginHorizontal:12,
   },
+  textInfo: {
+    fontSize: 20,
+    color: "#fff",
+    fontFamily: 'Questrial',
+    marginHorizontal:12,
+    alignSelf: 'center',
+  },
   /* TEXT FIELDS */
   textInputField: {
     padding: 10,
