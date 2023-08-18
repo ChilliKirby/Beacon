@@ -69,6 +69,7 @@ const Form = () => {
                                 onChangeText={text => props.setFieldValue("email", text)}
                                 onBlur={() => props.setFieldTouched("email")}
                                 error={props.touched.email ? props.errors.email : null}
+                                inputMode="email"
                             />
                             {props.touched.email &&
                                 <Text style={styles.textFormError}>{props.errors.email}</Text>
@@ -81,7 +82,7 @@ const Form = () => {
                                 onChangeText={text => props.setFieldValue("password", text)}
                                 onBlur={() => props.setFieldTouched("password")}
                                 error={props.touched.password ? props.errors.password : null}
-
+                                secureTextEntry={true}
                             />
                             {props.touched.password &&
                                 <Text style={styles.textFormError}>{props.errors.password}</Text>
@@ -94,13 +95,14 @@ const Form = () => {
                                 onChangeText={text => props.setFieldValue("confirmPassword", text)}
                                 onBlur={() => props.setFieldTouched("confirmPassword")}
                                 error={props.touched.confirmPassword ? props.errors.confirmPassword : null}
+                                secureTextEntry={true}
                             />
                             {props.touched.confirmPassword &&
                                 <Text style={styles.textFormError}>{props.errors.confirmPassword}</Text>
                             }
 
                             <Button onPress={props.handleSubmit} title="Sign Up" />
-                            
+
                             <Text style={{ fontSize: 20 }}>{JSON.stringify(props, null, 2)}</Text>
                         </View>
                     )}
