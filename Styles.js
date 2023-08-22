@@ -24,6 +24,12 @@ export const styles = StyleSheet.create({
     margin: 12,
     borderRadius: 10,
   },
+  buttonContainer: {    
+    flexDirection: 'column',
+    justifyContent: 'center',    
+    margin: 12,
+    borderRadius: 10,
+  },
 
   /* TEXT */
   textHeadCentered: {

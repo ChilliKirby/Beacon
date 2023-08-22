@@ -14,6 +14,7 @@ import { themeSettings } from "./theme.js";
 import { useMemo } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 
+
 import LoginPage from "./scenes/loginPage/LoginPage.jsx";
 import HomePage from "./scenes/homePage/HomePage.jsx";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -62,6 +63,8 @@ export default function App() {
     
   // }
 
+  
+
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //Look into doing a splash screen to wait for font to load
   const [fontsLoaded] = useFonts({
@@ -73,6 +76,26 @@ export default function App() {
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
   const Stack = createNativeStackNavigator();
+
+  // const [user, setUser] = React.useState(null);
+
+  // signIn = async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const userInfo = await GoogleSignin.signIn();
+  //     setUser({ userInfo });
+  //   } catch (error) {
+  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+  //       // user cancelled the login flow
+  //     } else if (error.code === statusCodes.IN_PROGRESS) {
+  //       // operation (e.g. sign in) is in progress already
+  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //       // play services not available or outdated
+  //     } else {
+  //       // some other error happened
+  //     }
+  //   }
+  // };
 
   return (
     // <View style={styles.container}>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -6,9 +6,12 @@ import { useDispatch } from "react-redux";
 //import DropZone from "react-dropzone";
 import { SafeAreaView, Text, View, Button, TextInput, ScrollView } from "react-native";
 import { styles } from "../../Styles.js";
-// import { TextField, FilledTextField,
-//     OutlinedTextField, } from "react-native-material-textfield";
-
+// import * as Google from 'expo-auth-session/providers/google.js';
+import {
+    GoogleSignin,
+    GoogleSigninButton,
+    statusCodes,
+} from '@react-native-google-signin/google-signin';
 
 const registrationSchema = yup.object().shape({
     userName: yup.string().required("*User name is required*"),
@@ -34,14 +37,76 @@ const handleFormSubmit = () => {
 
 };
 
+
+
+
 const Form = ({ navigation }) => {
 
+    const [accessToken, setAccessToken] = useState("55");
+    
+
+    // const [request, response, promptAsync] = Google.useAuthRequest({
+    //     androidClientId: "773266702561-aevc2uvkcfemljfg01c390vcvnk3hds5.apps.googleusercontent.com",
+    // });
+
+    GoogleSignin.configure();
+    const signIn = async () => {
+        setAccessToken("ppp");
+        try {
+            console.log("ppp");
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
+            setAccessToken( userInfo.email );
+        } catch (error) {
+            console.log("error");
+            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+                // user cancelled the login flow
+            } else if (error.code === statusCodes.IN_PROGRESS) {
+                // operation (e.g. sign in) is in progress already
+            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+                // play services not available or outdated
+            } else {
+                // some other error happened
+            }
+        }
+    };
+
+    getCurrentUser = async () => {
+        console.log("in get current user");
+        
+        const currentUser = await GoogleSignin.getCurrentUser();
+
+        console.log(currentUser.user.email);
+        setAccessToken( currentUser.email);
+      };
+    // useEffect(() => {
+    //     if(response?.type === "success"){
+    //         setAccessToken(response.authentication.accessToken);
+    //     }else{
+    //         setAccessToken(response?.type);
+    //     }
+    // }, [response]);
+
+    const getUserData = async () => {
+        let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+            headers: { Authorization: `Bearer ${accessToken}` }
+        });
+    }
+
     const [isLogin, setIsLogin] = useState(true);
+
 
     return (
         <SafeAreaView>
             <ScrollView>
-
+                <Button title="google" onPress={signIn } />
+                <GoogleSigninButton
+                    size={GoogleSigninButton.Size.Wide}
+                    color={GoogleSigninButton.Color.Dark}
+                    onPress={getCurrentUser}
+                    
+                />
+                <Text>{accessToken}</Text>
                 <Formik
                     onSubmit={values => alert(JSON.stringify(values, null, 2))}
                     validationSchema={registrationSchema}
@@ -109,11 +174,15 @@ const Form = ({ navigation }) => {
                             }
 
                             {isLogin && (
-                                <Button onPress={props.handleSubmit} title="Log in" />
+                                <View style={styles.buttonContainer}>
+                                    <Button onPress={props.handleSubmit} title="Log in" />
+                                </View>
                             )}
 
                             {!isLogin && (
-                                <Button onPress={props.handleSubmit} title="Sign Up" />
+                                <View style={styles.buttonContainer}>
+                                    <Button style={styles.buttonContainer} onPress={props.handleSubmit} title="Sign Up" />
+                                </View>
                             )}
 
 
