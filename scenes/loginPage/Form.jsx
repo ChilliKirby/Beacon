@@ -43,6 +43,7 @@ const handleFormSubmit = () => {
 const Form = ({ navigation }) => {
 
     const [accessToken, setAccessToken] = useState("55");
+    const user = useState(null);
     
 
     // const [request, response, promptAsync] = Google.useAuthRequest({
