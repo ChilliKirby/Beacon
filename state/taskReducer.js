@@ -20,4 +20,4 @@ const taskReducer = (state = initialState, action) => {
     }
 };
 
-export default rootReducer;
+export default taskReducer;
