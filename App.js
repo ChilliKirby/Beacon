@@ -14,11 +14,41 @@ import { themeSettings } from "./theme.js";
 import { useMemo } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 
-
 import LoginPage from "./scenes/loginPage/LoginPage.jsx";
 import HomePage from "./scenes/homePage/HomePage.jsx";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useFonts } from 'expo-font'
+import { useFonts } from 'expo-font';
+
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import authReducer from "./state/index.js";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+
+//import storage from "redux-persist/lib/storage";
+
+import { PersistGate } from "redux-persist/integration/react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const persistConfig = { key: "root", storage: AsyncStorage, version: 1 };
+const persistedReducer = persistReducer(persistConfig, authReducer);
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
 
 
 export default function App() {
@@ -55,20 +85,20 @@ export default function App() {
   // }, []);
 
   // let text = "waiting...";
-  
+
   // if(errorMsg){
   //   text = errorMsg;
   // } else if(location){
   //   text = JSON.stringify(location);
-    
+
   // }
 
-  
+
 
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //Look into doing a splash screen to wait for font to load
   const [fontsLoaded] = useFonts({
-      'Questrial': require('./assets/fonts/questrial/Questrial-Regular.ttf'),
+    'Questrial': require('./assets/fonts/questrial/Questrial-Regular.ttf'),
   });
 
   const mode = "dark";
@@ -110,16 +140,21 @@ export default function App() {
     //     <Marker coordinate={region} />
     //   </MapView>
     // </View>
-    
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Login"
-          component={LoginPage}
-          options={{title: "Login"}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistStore(store)}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={LoginPage}
+              options={{ title: "Login" }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
+    </Provider>
+
   );
 }
 

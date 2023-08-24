@@ -1,8 +1,22 @@
-import taskReducer from "./taskReducer.js";
-import { combineReducers } from "redux";
+import { createSlice } from "@reduxjs/toolkit";
 
-const rootReducer = combineReducers({
-    tasks: taskReducer,
+const initialState = {
+    userName: "asssss",
+    token: null,
+    friends: [],
+    tasks: [],
+};
+
+const authSlice = createSlice({
+    name: "auth",
+    initialState,
+    reducers: {
+        setUser: (state, action) =>{
+            state.userName = action.payload.userName;
+        },
+        
+    }
 });
 
-export default rootReducer; 
+export const { setUser } = authSlice.actions;
+export default authSlice.reducer;
