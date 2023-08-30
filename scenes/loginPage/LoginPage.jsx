@@ -39,6 +39,7 @@ const LoginPage = ({ navigation }) => {
     const signInGoogle = async () => {
         console.log("try log in");
         try {
+            
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
             setUser(userInfo);
@@ -92,16 +93,19 @@ const LoginPage = ({ navigation }) => {
 
         const loggedInResponse = await fetch("http://192.168.86.121:3001/auth/login",{
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                Authorization: `Bearer ${userInfo.idToken}`,
+                "Content-Type": "application/json" 
+            },
             body: JSON.stringify({
                 email: userInfo.user.email,
-                idToken: userInfo.idToken
             })
         })
 
         
         } catch(error){
             console.log("error:", error);
+            console.log("client token errrrrr");
         }
     };
 
@@ -117,6 +121,7 @@ const LoginPage = ({ navigation }) => {
         try {
             await GoogleSignin.signOut();
             console.log("signed out");
+            
             //setState({ user: null }); // Remember to remove the user from your app's state as well
         } catch (error) {
             console.error(error);
