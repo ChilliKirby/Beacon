@@ -90,14 +90,15 @@ const LoginPage = ({ navigation }) => {
         console.log(userInfo.user.email);
         console.log(userInfo.idToken);
         console.log(process.env.EXPO_PUBLIC_REACT_APP_WEB_CLIENT_ID);
-
-        const loggedInResponse = await fetch("http://192.168.86.121:3001/auth/login",{
+        
+        const loggedInResponse = await fetch("http://192.168.86.123:3001/auth/login",{
             method: "POST",
             headers: { 
                 Authorization: `Bearer ${userInfo.idToken}`,
                 "Content-Type": "application/json" 
             },
             body: JSON.stringify({
+                nickName: userInfo.user.name,
                 email: userInfo.user.email,
             })
         })
