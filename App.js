@@ -12,11 +12,14 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme.js";
 import { useMemo } from "react";
+
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import LoginPage from "./scenes/loginPage/LoginPage.jsx";
 import HomePage from "./scenes/homePage/HomePage.jsx";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import { useFonts } from 'expo-font';
 
 import { configureStore } from "@reduxjs/toolkit";
@@ -106,6 +109,7 @@ export default function App() {
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
   const Stack = createNativeStackNavigator();
+  const Tab = createBottomTabNavigator();
 
   // const [user, setUser] = React.useState(null);
 
@@ -144,13 +148,17 @@ export default function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistStore(store)}>
         <NavigationContainer>
-          <Stack.Navigator>
+          {/* <Stack.Navigator>
             <Stack.Screen
               name="Login"
               component={LoginPage}
               options={{ title: "Login" }}
-            />
-          </Stack.Navigator>
+            />     
+
+          </Stack.Navigator> */}
+           <Tab.Navigator>
+              <Tab.Screen name="Login" component={LoginPage}/>
+            </Tab.Navigator>
         </NavigationContainer>
       </PersistGate>
     </Provider>
